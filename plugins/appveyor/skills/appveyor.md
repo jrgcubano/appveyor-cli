@@ -14,14 +14,16 @@ Route natural language requests to the appropriate AppVeyor CLI commands.
 
 ## Context Detection
 
-First, detect the project context automatically:
+If the user specifies a project name or slug, use that directly. Otherwise, try to auto-detect:
 
 ```bash
 git branch --show-current
 git remote get-url origin 2>/dev/null
 ```
 
-Extract the account/slug from the remote URL if it's an AppVeyor-connected repo.
+Extract the account/slug from the remote URL if possible. If auto-detection fails (e.g., the current repo isn't on AppVeyor), ask the user for the project slug in `account/slug` format.
+
+The user might be working in project X but asking about a completely different AppVeyor project — that's fine. Always prefer explicit project references over auto-detection when the user names a specific project.
 
 ## Command Routing
 
