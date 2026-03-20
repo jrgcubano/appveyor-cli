@@ -1,6 +1,6 @@
 {
   "name": "appveyor",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "AppVeyor CI/CD commands — check builds, deploy, manage projects from any repo",
   "author": {
     "name": "Jorge Rodríguez Galán",
