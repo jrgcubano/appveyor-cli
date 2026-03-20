@@ -35,6 +35,26 @@ public interface IAppVeyorClient
     Task<Deployment> StartDeploymentAsync(StartDeploymentRequest request, CancellationToken ct = default);
     Task CancelDeploymentAsync(int deploymentId, CancellationToken ct = default);
 
+    // Users
+    Task<User[]> GetUsersAsync(CancellationToken ct = default);
+    Task<UserDetails> GetUserAsync(int userId, CancellationToken ct = default);
+    Task AddUserAsync(AddUserRequest request, CancellationToken ct = default);
+    Task UpdateUserAsync(UpdateUserRequest request, CancellationToken ct = default);
+    Task DeleteUserAsync(int userId, CancellationToken ct = default);
+
+    // Collaborators
+    Task<User[]> GetCollaboratorsAsync(CancellationToken ct = default);
+    Task<UserDetails> GetCollaboratorAsync(int userId, CancellationToken ct = default);
+    Task AddCollaboratorAsync(AddCollaboratorRequest request, CancellationToken ct = default);
+    Task UpdateCollaboratorAsync(UpdateCollaboratorRequest request, CancellationToken ct = default);
+    Task DeleteCollaboratorAsync(int userId, CancellationToken ct = default);
+
+    // Roles
+    Task<Role[]> GetRolesAsync(CancellationToken ct = default);
+    Task<RoleWithPermissions> GetRoleAsync(int roleId, CancellationToken ct = default);
+    Task<RoleWithPermissions> AddRoleAsync(AddRoleRequest request, CancellationToken ct = default);
+    Task DeleteRoleAsync(int roleId, CancellationToken ct = default);
+
     // Connection
     Task<bool> TestConnectionAsync(CancellationToken ct = default);
 }

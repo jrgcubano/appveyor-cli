@@ -2,8 +2,11 @@ using AppVeyorCli.Api;
 using AppVeyorCli.Commands.Builds;
 using AppVeyorCli.Commands.Config;
 using AppVeyorCli.Commands.Deployments;
+using AppVeyorCli.Commands.Collaborators;
 using AppVeyorCli.Commands.Environments;
 using AppVeyorCli.Commands.Projects;
+using AppVeyorCli.Commands.Roles;
+using AppVeyorCli.Commands.Users;
 using AppVeyorCli.Configuration;
 using AppVeyorCli.Infrastructure;
 using AppVeyorCli.Output;
@@ -90,6 +93,32 @@ app.Configure(config =>
         d.AddCommand<DeploymentGetCommand>("get").WithDescription("Get deployment details");
         d.AddCommand<DeploymentStartCommand>("start").WithDescription("Start a deployment");
         d.AddCommand<DeploymentCancelCommand>("cancel").WithDescription("Cancel a deployment");
+    });
+
+    config.AddBranch("user", u =>
+    {
+        u.SetDescription("Manage team users");
+        u.AddCommand<UserListCommand>("list").WithDescription("List all users");
+        u.AddCommand<UserGetCommand>("get").WithDescription("Get user details");
+        u.AddCommand<UserAddCommand>("add").WithDescription("Add a new user");
+        u.AddCommand<UserDeleteCommand>("delete").WithDescription("Delete a user");
+    });
+
+    config.AddBranch("collaborator", co =>
+    {
+        co.SetDescription("Manage project collaborators");
+        co.AddCommand<CollaboratorListCommand>("list").WithDescription("List all collaborators");
+        co.AddCommand<CollaboratorAddCommand>("add").WithDescription("Add a collaborator");
+        co.AddCommand<CollaboratorDeleteCommand>("delete").WithDescription("Remove a collaborator");
+    });
+
+    config.AddBranch("role", r =>
+    {
+        r.SetDescription("Manage roles and permissions");
+        r.AddCommand<RoleListCommand>("list").WithDescription("List all roles");
+        r.AddCommand<RoleGetCommand>("get").WithDescription("Get role details and permissions");
+        r.AddCommand<RoleAddCommand>("add").WithDescription("Add a new role");
+        r.AddCommand<RoleDeleteCommand>("delete").WithDescription("Delete a role");
     });
 
 #if DEBUG

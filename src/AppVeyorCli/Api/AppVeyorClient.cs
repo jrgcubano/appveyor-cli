@@ -136,6 +136,54 @@ public sealed class AppVeyorClient : IAppVeyorClient, IDisposable
         await PutAsync("deployments/stop", request, AppVeyorJsonContext.Default.CancelDeploymentRequest, ct);
     }
 
+    // Users
+
+    public async Task<User[]> GetUsersAsync(CancellationToken ct = default)
+        => await GetAsync("users", AppVeyorJsonContext.Default.UserArray, ct);
+
+    public async Task<UserDetails> GetUserAsync(int userId, CancellationToken ct = default)
+        => await GetAsync($"users/{userId}", AppVeyorJsonContext.Default.UserDetails, ct);
+
+    public async Task AddUserAsync(AddUserRequest request, CancellationToken ct = default)
+        => await PostAsync("users", request, AppVeyorJsonContext.Default.AddUserRequest, ct);
+
+    public async Task UpdateUserAsync(UpdateUserRequest request, CancellationToken ct = default)
+        => await PutAsync("users", request, AppVeyorJsonContext.Default.UpdateUserRequest, ct);
+
+    public async Task DeleteUserAsync(int userId, CancellationToken ct = default)
+        => await DeleteAsync($"users/{userId}", ct);
+
+    // Collaborators
+
+    public async Task<User[]> GetCollaboratorsAsync(CancellationToken ct = default)
+        => await GetAsync("collaborators", AppVeyorJsonContext.Default.UserArray, ct);
+
+    public async Task<UserDetails> GetCollaboratorAsync(int userId, CancellationToken ct = default)
+        => await GetAsync($"collaborators/{userId}", AppVeyorJsonContext.Default.UserDetails, ct);
+
+    public async Task AddCollaboratorAsync(AddCollaboratorRequest request, CancellationToken ct = default)
+        => await PostAsync("collaborators", request, AppVeyorJsonContext.Default.AddCollaboratorRequest, ct);
+
+    public async Task UpdateCollaboratorAsync(UpdateCollaboratorRequest request, CancellationToken ct = default)
+        => await PutAsync("collaborators", request, AppVeyorJsonContext.Default.UpdateCollaboratorRequest, ct);
+
+    public async Task DeleteCollaboratorAsync(int userId, CancellationToken ct = default)
+        => await DeleteAsync($"collaborators/{userId}", ct);
+
+    // Roles
+
+    public async Task<Role[]> GetRolesAsync(CancellationToken ct = default)
+        => await GetAsync("roles", AppVeyorJsonContext.Default.RoleArray, ct);
+
+    public async Task<RoleWithPermissions> GetRoleAsync(int roleId, CancellationToken ct = default)
+        => await GetAsync($"roles/{roleId}", AppVeyorJsonContext.Default.RoleWithPermissions, ct);
+
+    public async Task<RoleWithPermissions> AddRoleAsync(AddRoleRequest request, CancellationToken ct = default)
+        => await PostAsync("roles", request, AppVeyorJsonContext.Default.AddRoleRequest, AppVeyorJsonContext.Default.RoleWithPermissions, ct);
+
+    public async Task DeleteRoleAsync(int roleId, CancellationToken ct = default)
+        => await DeleteAsync($"roles/{roleId}", ct);
+
     // Connection test
 
     public async Task<bool> TestConnectionAsync(CancellationToken ct = default)
@@ -177,6 +225,16 @@ public sealed class AppVeyorClient : IAppVeyorClient, IDisposable
         var stream = await response.Content.ReadAsStreamAsync(ct);
         return await JsonSerializer.DeserializeAsync(stream, responseType, ct)
                ?? throw new AppVeyorApiException(response.StatusCode, "Empty response from API");
+    }
+
+    private async Task PostAsync<TRequest>(
+        string path, TRequest body,
+        System.Text.Json.Serialization.Metadata.JsonTypeInfo<TRequest> requestType,
+        CancellationToken ct)
+    {
+        var json = JsonSerializer.Serialize(body, requestType);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        await SendAsync(HttpMethod.Post, path, content, ct);
     }
 
     private async Task<TResponse> PutAsync<TRequest, TResponse>(
