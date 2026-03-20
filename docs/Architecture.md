@@ -6,32 +6,76 @@ AppVeyor CLI is a .NET 10 command-line tool for the AppVeyor CI/CD REST API. It 
 
 ## Module Map
 
-```
-                         Program.cs
-                        (DI + CommandApp)
-                             |
-              +--------------+--------------+
-              |              |              |
-         IConsoleProvider  IConfigService  IAppVeyorClient
-              |              |              |
-              v              v              v
-    OutputRendererFactory  ConfigService  AppVeyorClient
-         |         |         |              |
-         v         v         v              v
-  ConsoleRenderer  JsonRenderer  config.json  AppVeyor REST API
-  (Spectre tables) (JSON stdout) (env vars)   (ci.appveyor.com)
+```mermaid
+graph TD
+    Program["Program.cs<br/><i>DI + CommandApp</i>"]
+
+    Program --> IConsole["IConsoleProvider"]
+    Program --> IConfig["IConfigService"]
+    Program --> IClient["IAppVeyorClient"]
+
+    IConsole --> ORF["OutputRendererFactory"]
+    IConfig --> CS["ConfigService"]
+    IClient --> AC["AppVeyorClient"]
+
+    ORF --> CR["ConsoleRenderer<br/><i>Spectre tables</i>"]
+    ORF --> JR["JsonRenderer<br/><i>JSON stdout</i>"]
+    CS --> CF["~/.appveyor/config.json"]
+    CS --> EV["Environment Variables"]
+    AC --> API["AppVeyor REST API<br/><i>ci.appveyor.com/api</i>"]
+
+    subgraph Commands
+        direction LR
+        Config["config<br/>set · get · test"]
+        Projects["project<br/>list · get · add · delete · settings"]
+        Builds["build<br/>start · history · cancel · rerun · log"]
+        Envs["environment<br/>list · get · add · delete"]
+        Deploys["deployment<br/>get · start · cancel"]
+        Users["user<br/>list · get · add · delete"]
+        Collabs["collaborator<br/>list · add · delete"]
+        Roles["role<br/>list · get · add · delete"]
+    end
+
+    Program --> Commands
+
+    style Program fill:#4a9eff,color:#fff
+    style API fill:#ff6b6b,color:#fff
+    style CR fill:#51cf66,color:#fff
+    style JR fill:#ffd43b,color:#333
+    style Commands fill:#f8f9fa,stroke:#dee2e6
 ```
 
 ## Command Flow
 
-```
-User Input
-  -> Spectre.Console.Cli (parse args, validate settings)
-    -> AsyncCommand<TSettings>.ExecuteAsync
-      -> ReadOnlyGuard.ThrowIfReadOnly (write commands only)
-      -> IAppVeyorClient.{Method}Async (HTTP call)
-      -> OutputRendererFactory.Create (select rich vs JSON)
-      -> IOutputRenderer.Render{Table|Detail|Json} (output)
+```mermaid
+sequenceDiagram
+    actor User
+    participant CLI as Spectre.Console.Cli
+    participant Cmd as AsyncCommand
+    participant Guard as ReadOnlyGuard
+    participant Client as IAppVeyorClient
+    participant API as AppVeyor API
+    participant Renderer as IOutputRenderer
+
+    User->>CLI: appveyor project list --json
+    CLI->>CLI: Parse args, validate settings
+    CLI->>Cmd: ExecuteAsync(context, settings)
+
+    opt Write commands only
+        Cmd->>Guard: ThrowIfReadOnly(settings)
+    end
+
+    Cmd->>Client: GetProjectsAsync()
+    Client->>API: GET /api/projects
+    API-->>Client: JSON response
+    Client-->>Cmd: Project[]
+
+    Cmd->>Renderer: OutputRendererFactory.Create(json, console)
+    alt --json flag or APPVEYOR_OUTPUT=json
+        Renderer-->>User: Clean JSON to stdout
+    else Default
+        Renderer-->>User: Spectre.Console table
+    end
 ```
 
 ## Phases
@@ -58,7 +102,7 @@ User Input
 
 ## Key Patterns
 
-- **Command structure** -- Each command is an `AsyncCommand<TSettings>` with settings inheriting from `GlobalSettings`. Commands are organized in domain folders (Config, Projects, Builds, Environments, Deployments).
+- **Command structure** -- Each command is an `AsyncCommand<TSettings>` with settings inheriting from `GlobalSettings`. Commands are organized in domain folders (Config, Projects, Builds, Environments, Deployments, Users, Collaborators, Roles).
 - **DI bridge** -- `TypeRegistrar`/`TypeResolver` bridge Spectre.Console.Cli to Microsoft.Extensions.DependencyInjection. `IConsoleProvider` wraps `IAnsiConsole` to avoid Spectre's DI override.
 - **Output abstraction** -- Commands call `OutputRendererFactory.Create(settings.Json, console)` and use the returned `IOutputRenderer` for all output. The renderer handles both Spectre tables and JSON serialization.
 - **API client** -- Single `AppVeyorClient` using `HttpClient` with Bearer token auth. All paths are relative to the `/api/` base URL. Error responses are mapped to typed `AppVeyorApiException`.
