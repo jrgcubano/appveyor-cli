@@ -18,6 +18,7 @@ Start with [Architecture.md](Architecture.md) for an overview of the project str
 | [Phase 3](phases/phase-3-build-ci-cd.md) | Build System and CI/CD | Complete |
 | [Phase 4](phases/phase-4-commands-and-features.md) | Commands and Features | Complete |
 | [Phase 5](phases/phase-5-testing.md) | Testing | Complete |
+| [Phase 6](phases/phase-6-team-management.md) | Team Management | Complete |
 
 ## Architecture Decision Records
 

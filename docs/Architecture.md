@@ -82,6 +82,7 @@ sequenceDiagram
 | 3 | [Build and CI/CD](phases/phase-3-build-ci-cd.md) | Complete | Cake SDK, GitHub Actions, install scripts |
 | 4 | [Commands and Features](phases/phase-4-commands-and-features.md) | Complete | 20 commands, read-only mode |
 | 5 | [Testing](phases/phase-5-testing.md) | Complete | 31 tests, MockAppVeyorServer |
+| 6 | [Team Management](phases/phase-6-team-management.md) | Complete | Users, collaborators, roles (11 commands) |
 
 ## Architecture Decision Records
 

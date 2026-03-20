@@ -1,9 +1,7 @@
 # AppVeyor CLI
 
 [![Release](https://img.shields.io/github/v/release/jrgcubano/appveyor-cli?style=flat-square)](https://github.com/jrgcubano/appveyor-cli/releases)
-[![CI](https://img.shields.io/github/actions/workflow/status/jrgcubano/appveyor-cli/ci.yaml?branch=main&style=flat-square&label=CI)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/ci.yaml)
 [![License](https://img.shields.io/github/license/jrgcubano/appveyor-cli?style=flat-square)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-10.0-512bd4?style=flat-square)](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 A command-line interface for the [AppVeyor](https://www.appveyor.com/) CI/CD API, built with .NET 10 and [Spectre.Console](https://spectreconsole.net/).
 
@@ -15,6 +13,7 @@ Designed for both human use (rich terminal tables, color-coded build statuses) a
 - 🔨 **Build Management** - Start, cancel, re-run builds and view build history with logs
 - 🌍 **Environment Management** - List, inspect, add, and delete deployment environments
 - 🚀 **Deployment Management** - Start, inspect, and cancel deployments
+- 👥 **Team Management** - Manage users, collaborators, and roles with permissions
 - 🎨 **Rich Terminal Output** - Spectre.Console tables, panels, and color-coded statuses
 - 🤖 **JSON Output** - `--json` flag on every command for scripting and AI agent consumption
 - 🔒 **Read-Only Mode** - `--read-only` flag or `APPVEYOR_READ_ONLY=true` to prevent accidental writes
@@ -172,6 +171,51 @@ appveyor deployment get 456
 appveyor deployment cancel 456
 ```
 
+### Users
+
+```bash
+# List all team users
+appveyor user list
+
+# Get user details
+appveyor user get 100
+
+# Add a new user
+appveyor user add --name "Jane Smith" --email jane@example.com --role-id 2
+
+# Delete a user
+appveyor user delete 100
+```
+
+### Collaborators
+
+```bash
+# List all collaborators
+appveyor collaborator list
+
+# Add a collaborator
+appveyor collaborator add --email external@example.com --role-id 3
+
+# Remove a collaborator
+appveyor collaborator delete 101
+```
+
+### Roles
+
+```bash
+# List all roles
+appveyor role list
+
+# Get role details with permissions
+appveyor role get 1
+
+# Add a new role
+appveyor role add --name "QA Team"
+
+# Delete a role
+appveyor role delete 5
+```
+
 ### JSON Output
 
 Every command supports `--json` for machine-readable output:
@@ -252,8 +296,9 @@ This CLI covers the following AppVeyor API areas:
 - Builds (start, cancel, re-run, delete, history, job log)
 - Environments (list, get, add, update, delete)
 - Deployments (get, start, cancel)
-
-Team management (users, collaborators, roles) is not yet implemented.
+- Users (list, get, add, delete)
+- Collaborators (list, add, delete)
+- Roles (list, get, add, delete)
 
 ## License
 

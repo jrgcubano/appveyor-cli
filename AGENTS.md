@@ -14,9 +14,9 @@ src/AppVeyorCli/
   Infrastructure/         - Spectre.Console DI bridge, global settings, read-only guard
   Configuration/          - Config file and env var management (~/.appveyor/config.json)
   Api/                    - IAppVeyorClient interface + HttpClient implementation
-  Models/                 - C# record types for API entities (Project, Build, etc.)
+  Models/                 - C# record types for API entities (Project, Build, User, Role, etc.)
   Output/                 - IOutputRenderer abstraction (ConsoleRenderer vs JsonRenderer)
-  Commands/               - One folder per domain (Config, Projects, Builds, Environments, Deployments)
+  Commands/               - One folder per domain (Config, Projects, Builds, Environments, Deployments, Users, Collaborators, Roles)
 
 tests/AppVeyorCli.Tests/
   Infrastructure/         - MockAppVeyorServer (fake HTTP server for integration tests)
