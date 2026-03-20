@@ -37,12 +37,6 @@ graph TD
     end
 
     Program --> Commands
-
-    style Program fill:#4a9eff,color:#fff
-    style API fill:#ff6b6b,color:#fff
-    style CR fill:#51cf66,color:#fff
-    style JR fill:#ffd43b,color:#333
-    style Commands fill:#f8f9fa,stroke:#dee2e6
 ```
 
 ## Command Flow
