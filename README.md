@@ -1,7 +1,9 @@
 # AppVeyor CLI
 
-[![Release](https://img.shields.io/github/v/release/jrgcubano/appveyor-cli?style=flat-square)](https://github.com/jrgcubano/appveyor-cli/releases)
-[![License](https://img.shields.io/github/license/jrgcubano/appveyor-cli?style=flat-square)](LICENSE)
+[![CI](https://github.com/jrgcubano/appveyor-cli/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/ci.yaml)
+[![CodeQL](https://github.com/jrgcubano/appveyor-cli/actions/workflows/codeql.yaml/badge.svg?branch=main)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/codeql.yaml)
+[![Release](https://github.com/jrgcubano/appveyor-cli/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/release.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 A command-line interface for the [AppVeyor](https://www.appveyor.com/) CI/CD API, built with .NET 10 and [Spectre.Console](https://spectreconsole.net/).
 
