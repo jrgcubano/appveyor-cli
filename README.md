@@ -1,5 +1,10 @@
 # AppVeyor CLI
 
+[![Release](https://img.shields.io/github/v/release/jrgcubano/appveyor-cli?style=flat-square)](https://github.com/jrgcubano/appveyor-cli/releases)
+[![CI](https://img.shields.io/github/actions/workflow/status/jrgcubano/appveyor-cli/ci.yaml?branch=main&style=flat-square&label=CI)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/ci.yaml)
+[![License](https://img.shields.io/github/license/jrgcubano/appveyor-cli?style=flat-square)](LICENSE)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512bd4?style=flat-square)](https://dotnet.microsoft.com/download/dotnet/10.0)
+
 A command-line interface for the [AppVeyor](https://www.appveyor.com/) CI/CD API, built with .NET 10 and [Spectre.Console](https://spectreconsole.net/).
 
 Designed for both human use (rich terminal tables, color-coded build statuses) and AI/machine consumption (structured JSON output via `--json`).
