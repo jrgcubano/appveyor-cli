@@ -387,3 +387,9 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a pull request.
 - [Spectre.Console](https://github.com/spectreconsole/spectre.console) - Rich terminal output and CLI framework
 - [freshdesk-cli](https://github.com/Aaronontheweb/freshdesk-cli/tree/dev) - Reference .NET CLI project used as architectural inspiration
 - [Cake Build](https://cakebuild.net/) - Build automation system
+
+## Acknowledgements
+
+- [dotnet-artisan](https://github.com/novotnyllc/dotnet-artisan) - Reference for AI plugin structure, skill layout, and multi-provider support (Claude Code, Copilot CLI, Codex)
+- The [Claude Code plugin system](https://docs.anthropic.com/en/docs/claude-code/plugins) and [Agent Skills](https://github.com/anthropics/agent-skills) open standard for enabling structured, discoverable development skills
+- The [.NET community and ecosystem](https://dotnet.microsoft.com/) for the frameworks, libraries, and patterns used in this project
