@@ -279,14 +279,14 @@ This project includes an AI plugin that works with multiple providers. Install i
 
 ```bash
 claude plugin marketplace add jrgcubano/appveyor-cli
-claude plugin install appveyor-cli@appveyor
+claude plugin install appveyor@appveyor-cli
 ```
 
 ### GitHub Copilot CLI
 
 ```bash
 copilot plugin marketplace add jrgcubano/appveyor-cli
-copilot plugin install appveyor-cli@appveyor
+copilot plugin install appveyor@appveyor-cli
 ```
 
 ### OpenAI Codex
