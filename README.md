@@ -5,9 +5,9 @@
 [![Release](https://github.com/jrgcubano/appveyor-cli/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/release.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A command-line interface for the [AppVeyor](https://www.appveyor.com/) CI/CD API.
+One CLI for all of [AppVeyor](https://www.appveyor.com/) CI/CD — built for humans and AI agents.
 
-Designed for both human use (rich terminal tables, color-coded build statuses) and AI/machine consumption (structured JSON output via `--json`).
+Projects, builds, environments, deployments, and team management. Rich terminal output. Structured JSON. 8 agent skills included.
 
 ## Table of Contents
 
