@@ -1,8 +1,0 @@
-{
-  "$schema": "https://cdn.jsdelivr.net/npm/@anthropic-ai/claude-code@latest/plugin-schema.json",
-  "name": "appveyor",
-  "version": "0.1.0",
-  "description": "AppVeyor CI/CD commands for Claude Code — check builds, deploy, manage projects. Works from any project — specify the AppVeyor project slug or let it auto-detect from git remote.",
-  "author": "jrgcubano",
-  "homepage": "https://github.com/jrgcubano/appveyor-cli"
-}

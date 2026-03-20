@@ -1,0 +1,32 @@
+{
+  "name": "appveyor",
+  "version": "0.1.1",
+  "description": "AppVeyor CI/CD commands — check builds, deploy, manage projects from any repo",
+  "author": {
+    "name": "Jorge Rodríguez Galán",
+    "url": "https://github.com/jrgcubano"
+  },
+  "homepage": "https://github.com/jrgcubano/appveyor-cli",
+  "repository": "https://github.com/jrgcubano/appveyor-cli",
+  "license": "MIT",
+  "keywords": [
+    "appveyor",
+    "ci-cd",
+    "builds",
+    "deployments",
+    "devops"
+  ],
+  "skills": [
+    "./skills/appveyor",
+    "./skills/appveyor-status",
+    "./skills/appveyor-projects",
+    "./skills/appveyor-builds",
+    "./skills/appveyor-build-start",
+    "./skills/appveyor-deploy",
+    "./skills/appveyor-logs",
+    "./skills/appveyor-setup"
+  ],
+  "agents": [
+    "./agents/ci-monitor.md"
+  ]
+}

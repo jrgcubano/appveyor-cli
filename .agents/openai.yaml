@@ -1,0 +1,9 @@
+interface:
+  display_name: "appveyor"
+  short_description: "8 AppVeyor skills for build status, deployments, and team management"
+  default_prompt: >
+    AppVeyor CI/CD plugin — check build status, view history, start builds,
+    deploy, manage users and roles. All skills use the appveyor CLI binary.
+
+policy:
+  allow_implicit_invocation: true

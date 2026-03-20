@@ -1,0 +1,13 @@
+{
+  "name": "appveyor",
+  "description": "AppVeyor CI/CD commands — check builds, deploy, manage projects from any repo",
+  "interface": {
+    "displayName": "appveyor",
+    "shortDescription": "8 AppVeyor skills for build status, deployments, and team management",
+    "longDescription": "CLI-based plugin for AppVeyor CI/CD. Check build status, view history, start builds, deploy, manage users/roles — from any repo. Uses the appveyor CLI binary with --json for structured output.",
+    "developerName": "Jorge Rodríguez Galán",
+    "category": "Development",
+    "capabilities": ["Write"],
+    "websiteURL": "https://github.com/jrgcubano/appveyor-cli"
+  }
+}

@@ -9,6 +9,21 @@ A command-line interface for the [AppVeyor](https://www.appveyor.com/) CI/CD API
 
 Designed for both human use (rich terminal tables, color-coded build statuses) and AI/machine consumption (structured JSON output via `--json`).
 
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [AI Plugin](#ai-plugin)
+- [Building from Source](#building-from-source)
+- [Technology](#technology)
+- [API Coverage](#api-coverage)
+- [License](#license)
+- [Contributing](#contributing)
+- [Documentation Map](#documentation-map)
+- [References](#references)
+
 ## Features
 
 - 📦 **Project Management** - List, inspect, add, and delete AppVeyor projects
@@ -255,6 +270,51 @@ All commands support these options:
 | `--verbose` | Show detailed output |
 | `--read-only` | Block all write operations |
 | `--help` | Show help for the command |
+
+## AI Plugin
+
+This project includes an AI plugin that works with multiple providers. Install it to get AppVeyor commands directly in your AI coding assistant.
+
+### Claude Code
+
+```bash
+claude plugin add jrgcubano/appveyor-cli
+```
+
+### GitHub Copilot CLI
+
+```bash
+copilot plugin add jrgcubano/appveyor-cli
+```
+
+### OpenAI Codex
+
+```bash
+$skill-installer install https://github.com/jrgcubano/appveyor-cli
+```
+
+### Available Skills
+
+Once installed, you can use these commands from your AI assistant:
+
+| Skill | Description |
+|-------|-------------|
+| `/appveyor` | Natural language — "is the build passing?", "deploy to staging" |
+| `/appveyor-status <project>` | Check current build status |
+| `/appveyor-projects` | List all projects |
+| `/appveyor-builds <project>` | View build history |
+| `/appveyor-build-start <project>` | Start a new build |
+| `/appveyor-deploy <project> <env> <version>` | Deploy a build |
+| `/appveyor-logs <job-id>` | Fetch and diagnose build logs |
+| `/appveyor-setup` | Install and configure the CLI |
+
+### Provider Support
+
+| Provider | Plugin Config | Skills | Agent |
+|----------|--------------|--------|-------|
+| Claude Code | `.claude-plugin/plugin.json` | `skills/*/SKILL.md` | `agents/ci-monitor.md` |
+| GitHub Copilot CLI | `.claude-plugin/plugin.json` | `skills/*/SKILL.md` | `agents/ci-monitor.md` |
+| OpenAI Codex | `.codex-plugin/plugin.json` | `skills/*/SKILL.md` | `.agents/openai.yaml` |
 
 ## Building from Source
 
