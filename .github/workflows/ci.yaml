@@ -37,4 +37,26 @@ jobs:
         run: |
           dotnet test --no-build -c Release \
             --logger "GitHubActions;summary.includePassedTests=true;summary.includeSkippedTests=true" \
-            --collect:"XPlat Code Coverage"
+            --collect:"XPlat Code Coverage" \
+            --results-directory ./TestResults
+
+      - name: Generate coverage report
+        if: always()
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          reportgenerator \
+            -reports:./TestResults/*/coverage.cobertura.xml \
+            -targetdir:./TestResults/CoverageReport \
+            -reporttypes:"MarkdownSummaryGithub;Cobertura"
+
+      - name: Add coverage to summary
+        if: always()
+        run: cat ./TestResults/CoverageReport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./TestResults/CoverageReport
+          retention-days: 30
