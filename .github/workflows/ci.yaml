@@ -23,4 +23,4 @@ jobs:
         shell: bash
         run: |
           dotnet tool restore
-          dotnet make
+          dotnet run build.cs

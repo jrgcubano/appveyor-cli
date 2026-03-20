@@ -39,3 +39,28 @@ public record StartDeploymentRequest(
 
 public record CancelDeploymentRequest(
     [property: JsonPropertyName("deploymentId")] int DeploymentId);
+
+// Team management requests
+
+public record AddUserRequest(
+    [property: JsonPropertyName("fullName")] string FullName,
+    [property: JsonPropertyName("email")] string Email,
+    [property: JsonPropertyName("roleId")] int RoleId,
+    [property: JsonPropertyName("generatePassword")] bool GeneratePassword = true);
+
+public record UpdateUserRequest(
+    [property: JsonPropertyName("userId")] int UserId,
+    [property: JsonPropertyName("fullName")] string? FullName = null,
+    [property: JsonPropertyName("email")] string? Email = null,
+    [property: JsonPropertyName("roleId")] int? RoleId = null);
+
+public record AddCollaboratorRequest(
+    [property: JsonPropertyName("email")] string Email,
+    [property: JsonPropertyName("roleId")] int RoleId);
+
+public record UpdateCollaboratorRequest(
+    [property: JsonPropertyName("userId")] int UserId,
+    [property: JsonPropertyName("roleId")] int RoleId);
+
+public record AddRoleRequest(
+    [property: JsonPropertyName("name")] string Name);
