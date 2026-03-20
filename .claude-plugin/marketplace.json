@@ -1,0 +1,35 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "appveyor-cli",
+  "description": "AppVeyor CI/CD plugins for Claude Code",
+  "owner": {
+    "name": "Jorge Rodríguez Galán",
+    "url": "https://github.com/jrgcubano"
+  },
+  "metadata": {
+    "description": "Marketplace hosting AppVeyor CI/CD plugins",
+    "version": "0.1.1"
+  },
+  "plugins": [
+    {
+      "name": "appveyor",
+      "source": "./",
+      "description": "AppVeyor CI/CD commands — check builds, deploy, manage projects from any repo",
+      "version": "0.1.1",
+      "author": {
+        "name": "Jorge Rodríguez Galán",
+        "url": "https://github.com/jrgcubano"
+      },
+      "license": "MIT",
+      "category": "development",
+      "homepage": "https://github.com/jrgcubano/appveyor-cli",
+      "keywords": [
+        "appveyor",
+        "ci-cd",
+        "builds",
+        "deployments",
+        "devops"
+      ]
+    }
+  ]
+}
