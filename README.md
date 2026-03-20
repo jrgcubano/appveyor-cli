@@ -5,7 +5,7 @@
 [![Release](https://github.com/jrgcubano/appveyor-cli/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/release.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A command-line interface for the [AppVeyor](https://www.appveyor.com/) CI/CD API, built with .NET 10 and [Spectre.Console](https://spectreconsole.net/).
+A command-line interface for the [AppVeyor](https://www.appveyor.com/) CI/CD API.
 
 Designed for both human use (rich terminal tables, color-coded build statuses) and AI/machine consumption (structured JSON output via `--json`).
 
