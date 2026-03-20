@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [      
+      "Bash(gh api:*)",
+      "Bash(dotnet --version)",
+      "Bash(dotnet --list-sdks)",
+      "Bash(dotnet new:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet list:*)",
+      "Bash(dotnet test:*)",
+      "Bash(dotnet run:*)",      
+      "Bash(dotnet tool:*)",
+      "Bash(dotnet cake:*)"
+    ]
+  }
+}

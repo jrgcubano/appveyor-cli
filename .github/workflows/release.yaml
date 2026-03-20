@@ -1,0 +1,135 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build-binaries:
+    name: Build-${{ matrix.runtime }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            runtime: linux-x64
+            archive: tar.gz
+          - os: windows-latest
+            runtime: win-x64
+            archive: zip
+          - os: macos-latest
+            runtime: osx-x64
+            archive: tar.gz
+          - os: macos-latest
+            runtime: osx-arm64
+            archive: tar.gz
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+
+      - name: Set version from tag
+        shell: bash
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          ASSEMBLY_VERSION=$(echo "$VERSION" | cut -d'-' -f1)
+          echo "ASSEMBLY_VERSION=$ASSEMBLY_VERSION" >> $GITHUB_ENV
+
+      - name: Publish self-contained binary
+        shell: bash
+        env:
+          RUNTIME: ${{ matrix.runtime }}
+          BUILD_VERSION: ${{ env.VERSION }}
+          BUILD_ASSEMBLY_VERSION: ${{ env.ASSEMBLY_VERSION }}
+        run: |
+          dotnet publish src/AppVeyorCli/AppVeyorCli.csproj \
+            -c Release \
+            -r "$RUNTIME" \
+            --self-contained \
+            -o "./publish/$RUNTIME" \
+            -p:Version="$BUILD_VERSION" \
+            -p:AssemblyVersion="$BUILD_ASSEMBLY_VERSION" \
+            -p:FileVersion="$BUILD_ASSEMBLY_VERSION"
+
+      - name: Create archive (Linux/macOS)
+        if: matrix.archive == 'tar.gz'
+        shell: bash
+        env:
+          RUNTIME: ${{ matrix.runtime }}
+          BUILD_VERSION: ${{ env.VERSION }}
+        run: |
+          cd "./publish/$RUNTIME"
+          tar -czf "../../appveyor-${BUILD_VERSION}-${RUNTIME}.tar.gz" *
+          cd ../..
+
+      - name: Create archive (Windows)
+        if: matrix.archive == 'zip'
+        shell: pwsh
+        run: |
+          $runtime = "${{ matrix.runtime }}"
+          $version = "$env:VERSION"
+          Compress-Archive -Path "./publish/$runtime/*" -DestinationPath "appveyor-$version-$runtime.zip"
+
+      - name: Calculate checksums
+        shell: bash
+        env:
+          RUNTIME: ${{ matrix.runtime }}
+          BUILD_VERSION: ${{ env.VERSION }}
+        run: |
+          if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            shasum -a 256 "appveyor-${BUILD_VERSION}-${RUNTIME}".* > "appveyor-${BUILD_VERSION}-${RUNTIME}.sha256"
+          else
+            sha256sum "appveyor-${BUILD_VERSION}-${RUNTIME}".* > "appveyor-${BUILD_VERSION}-${RUNTIME}.sha256"
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.runtime }}
+          path: |
+            appveyor-${{ env.VERSION }}-${{ matrix.runtime }}.*
+          retention-days: 7
+
+  create-release:
+    name: Create Release
+    needs: build-binaries
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v5
+        with:
+          pattern: release-*
+          merge-multiple: true
+          path: ./releases
+
+      - name: Extract version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ env.VERSION }}
+          draft: false
+          prerelease: ${{ contains(env.VERSION, 'beta') || contains(env.VERSION, 'rc') }}
+          files: ./releases/*
+          generate_release_notes: true

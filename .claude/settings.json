@@ -1,0 +1,5 @@
+{
+  "enabledPlugins": {
+    "dotnet-artisan@dotnet-artisan": true
+  }
+}
