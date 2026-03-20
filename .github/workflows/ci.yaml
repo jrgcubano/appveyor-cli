@@ -1,10 +1,18 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: CI
-on: pull_request
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+permissions:
+  contents: read
+  checks: write
 
 jobs:
   build:
@@ -19,8 +27,14 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v5
 
-      - name: Build & Test
-        shell: bash
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore -c Release
+
+      - name: Test
         run: |
-          dotnet tool restore
-          dotnet run build.cs
+          dotnet test --no-build -c Release \
+            --logger "GitHubActions;summary.includePassedTests=true;summary.includeSkippedTests=true" \
+            --collect:"XPlat Code Coverage"
