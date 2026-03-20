@@ -22,9 +22,9 @@ public sealed class CollaboratorListCommand(IAppVeyorClient client, IConsoleProv
         {
             renderer.RenderTable("Collaborators", collaborators,
                 new("User ID", c => ((Models.User)c).UserId.ToString(CultureInfo.InvariantCulture)),
-                new("Name", c => ((Models.User)c).FullName),
-                new("Email", c => ((Models.User)c).Email),
-                new("Role", c => ((Models.User)c).RoleName));
+                new("Name", c => Markup.Escape(((Models.User)c).FullName)),
+                new("Email", c => Markup.Escape(((Models.User)c).Email)),
+                new("Role", c => Markup.Escape(((Models.User)c).RoleName)));
         }
 
         return 0;

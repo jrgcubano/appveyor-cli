@@ -22,7 +22,7 @@ public sealed class RoleListCommand(IAppVeyorClient client, IConsoleProvider con
         {
             renderer.RenderTable("Roles", roles,
                 new("Role ID", r => ((Models.Role)r).RoleId.ToString(CultureInfo.InvariantCulture)),
-                new("Name", r => ((Models.Role)r).Name),
+                new("Name", r => Markup.Escape(((Models.Role)r).Name)),
                 new("System", r => ((Models.Role)r).IsSystem ? "Yes" : "No"),
                 new("Created", r => ((Models.Role)r).Created.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)));
         }

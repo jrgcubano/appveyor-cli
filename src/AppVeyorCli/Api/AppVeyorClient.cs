@@ -234,7 +234,7 @@ public sealed class AppVeyorClient : IAppVeyorClient, IDisposable
     {
         var json = JsonSerializer.Serialize(body, requestType);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        await SendAsync(HttpMethod.Post, path, content, ct);
+        using var response = await SendAsync(HttpMethod.Post, path, content, ct);
     }
 
     private async Task<TResponse> PutAsync<TRequest, TResponse>(

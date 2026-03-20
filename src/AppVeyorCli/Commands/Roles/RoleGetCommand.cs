@@ -28,7 +28,7 @@ public sealed class RoleGetCommand(IAppVeyorClient client, IConsoleProvider cons
         }
         else
         {
-            renderer.RenderDetail($"Role: {role.Name}",
+            renderer.RenderDetail($"Role: {Markup.Escape(role.Name)}",
                 ("Role ID", role.RoleId.ToString(CultureInfo.InvariantCulture)),
                 ("Name", role.Name),
                 ("System", role.IsSystem ? "Yes" : "No"),
@@ -39,9 +39,9 @@ public sealed class RoleGetCommand(IAppVeyorClient client, IConsoleProvider cons
                 foreach (var group in role.Groups)
                 {
                     consoleProvider.Console.WriteLine();
-                    renderer.RenderTable($"Permissions: {group.Name}", group.Permissions,
-                        new("Permission", p => ((Models.Permission)p).Name),
-                        new("Description", p => ((Models.Permission)p).Description),
+                    renderer.RenderTable($"Permissions: {Markup.Escape(group.Name)}", group.Permissions,
+                        new("Permission", p => Markup.Escape(((Models.Permission)p).Name)),
+                        new("Description", p => Markup.Escape(((Models.Permission)p).Description)),
                         new("Allowed", p => ((Models.Permission)p).Allowed ? "[green]Yes[/]" : "[red]No[/]"));
                 }
             }

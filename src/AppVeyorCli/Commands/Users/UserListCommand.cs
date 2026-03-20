@@ -22,9 +22,9 @@ public sealed class UserListCommand(IAppVeyorClient client, IConsoleProvider con
         {
             renderer.RenderTable("Users", users,
                 new("User ID", u => ((Models.User)u).UserId.ToString(CultureInfo.InvariantCulture)),
-                new("Name", u => ((Models.User)u).FullName),
-                new("Email", u => ((Models.User)u).Email),
-                new("Role", u => ((Models.User)u).RoleName),
+                new("Name", u => Markup.Escape(((Models.User)u).FullName)),
+                new("Email", u => Markup.Escape(((Models.User)u).Email)),
+                new("Role", u => Markup.Escape(((Models.User)u).RoleName)),
                 new("Owner", u => ((Models.User)u).IsOwner ? "Yes" : "No"));
         }
 

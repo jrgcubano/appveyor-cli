@@ -28,7 +28,7 @@ public sealed class UserGetCommand(IAppVeyorClient client, IConsoleProvider cons
         }
         else
         {
-            renderer.RenderDetail($"User: {result.User.FullName}",
+            renderer.RenderDetail($"User: {Markup.Escape(result.User.FullName)}",
                 ("User ID", result.User.UserId.ToString(CultureInfo.InvariantCulture)),
                 ("Email", result.User.Email),
                 ("Role", result.User.RoleName),
