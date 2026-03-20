@@ -2,10 +2,10 @@
 
 [![CI](https://github.com/jrgcubano/appveyor-cli/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/ci.yaml)
 [![CodeQL](https://github.com/jrgcubano/appveyor-cli/actions/workflows/codeql.yaml/badge.svg?branch=main)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/codeql.yaml)
-[![Release](https://github.com/jrgcubano/appveyor-cli/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/jrgcubano/appveyor-cli/actions/workflows/release.yaml)
+[![Release](https://img.shields.io/github/v/release/jrgcubano/appveyor-cli?style=flat)](https://github.com/jrgcubano/appveyor-cli/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-One CLI for all of [AppVeyor](https://www.appveyor.com/) CI/CD — built for humans and AI agents.
+CLI for the [AppVeyor](https://www.appveyor.com/) CI/CD API — built for humans and AI agents.
 
 Projects, builds, environments, deployments, and team management. Rich terminal output. Structured JSON. 8 agent skills included.
 
